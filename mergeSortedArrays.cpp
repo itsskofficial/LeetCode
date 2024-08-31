@@ -3,38 +3,31 @@ class Solution
     public:
         void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) 
         {
-            int last = m + n - 1;
+           int p1, p2;
+           p1 = m - n - 1;
+           p2 = 0;
 
-            while (m > 0 && n > 0)
+           while (p1 >= 0 && p2 < n)
+           {
+            if (nums1[p1] > nums2[p2])
             {
-                if (nums1[m - 1] >= nums2[n - 1])
-                {
-                    nums1[last] = nums1[m - 1];
-                    m -= 1;
-                }
-
-                else
-                {
-                    nums1[last] = nums2[n - 1];
-                    n -= 1;
-                }
-
-                last -= 1;
+                swap(nums1[p1], nums2[p2]);
+                p1--;
+                p2++;
             }
-
-            while (m > 0)
+            else 
             {
-                nums1[last] = nums1[m - 1];
-                m -= 1;
-                last -= 1;
-
+                break;
             }
+           }
 
-            while (n > 0)
-            {
-                nums1[last] = nums2[n - 1];
-                n -= 1;
-                last -= 1;
-            }
+           sort(nums2.begin(), nums2.end());    
+           
+           for (int i = m, j = 0; i < m + n; i++, j++)
+           {
+            nums1[i] = nums2[j];
+           }
+
+           sort(nums1.begin(), nums1.end());
         }
 };
