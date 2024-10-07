@@ -44,6 +44,39 @@ public:
         }
     }
 
+    void inorderMorris(TreeNode* node, vector<int> &res)
+    {
+        TreeNode* curr = node;
+        while (curr != NULL)
+        {
+            if (curr -> left == NULL)
+            {
+                res.push_back(curr -> val);
+                curr = curr -> right;
+            }
+            else
+            {
+                TreeNode* temp = curr -> left;
+                while (temp -> right && temp -> right != curr)
+                {
+                    temp = temp -> right;
+                }
+                
+                if (temp -> right == NULL)
+                {
+                    temp -> right = curr;
+                    curr = curr -> left;
+                }
+                else
+                {
+                    temp -> right = NULL;
+                    res.push_back(curr -> val);
+                    curr = curr -> right;
+                }
+            }
+        }
+    }
+
 
     vector<int> inorderTraversal(TreeNode* root) 
     {
@@ -55,7 +88,7 @@ public:
             return res;
         }
 
-        inorderRecursive(root, res);
+        inorderMorris(root, res);
         return res;
     }
 };
